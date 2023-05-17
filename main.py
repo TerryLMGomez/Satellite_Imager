@@ -111,7 +111,7 @@ def main():
 
     g = Gui()
 
-    zoom, lat, lon = 17, 37.937290, 21.271713
+    zoom, lat, lon = 16, 37.937290, 21.271713
     od = [600, 600, lat, lon] # OLD DATA width, height, x, y
 
     while 1:
