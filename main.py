@@ -59,12 +59,11 @@ def convert(lat, lon, z, extent = 1):
     zl_y = int(round(((extent * z2) / 2) * (1.0 - (math.log(math.tan(lat_rad) + 1.0 / math.cos(lat_rad)) / math.pi))))
     return [zl_x, zl_y]
 
-# Get image from x/y tile
+# Authorizes access to Mapbox API which allows requests from satellite image.
+# The function also sends https request and wraps the response in BytesIO object which lets PIL read it as an image.
+# Finally it resizes the image and saves the image
 
 def getImg(xt, yt, z, rf):
-    
-    # My API key - you can easily generate your own free one
-    
     token = 'pk.eyJ1IjoicGJhcm4xMCIsImEiOiJja29neWRpa3kwdHNyMzBsYTMyZzY3Mjh2In0.4qncuUkuvlkh_AwRpz5pog'
     r = get(
         f'https://api.mapbox.com/v4/mapbox.satellite/{z}/{xt}/{yt}@2x.pngraw?access_token={token}',
@@ -72,6 +71,10 @@ def getImg(xt, yt, z, rf):
     img = Image.open(BytesIO(r.content))
     img = img.resize((512//(2**rf),512//(2**rf)))
     img.save('temp.png')
+
+# Globalizes variables to allow them to be accessed and modified within the function.
+# Checks for update by comparing width,height,latitude and longitude with the main window
+#
 
 def update():
     global zoom, lat, lon, g, od
