@@ -1,3 +1,5 @@
+# Imports
+
 from tkinter import messagebox     # Error display
 import tkinter as tk               # Tkinter
 from tkinter import TclError       # Detect when window destroyed
@@ -6,22 +8,30 @@ from PIL import Image              # Image object
 from io import BytesIO             # Image to bytes conversion
 import math                        # Math library
 
+
+# base window for program and canvas with fill page and parameters
+
 class Gui:
-    def __init__(self):
+    def __init__(self):                     
         self.root = tk.Tk()
         self.root.title('Satellite Imager')
         self.can = tk.Canvas(self.root, width=600, height=600)
         self.can.pack(fill=tk.BOTH, expand=1)
         self.imgs = []
+        
+# ignore
 
     def __repr__(self):
         return f'__SatelliteImager.Graphics'
+    
+# adds image "temp.pmg", appends to array and anchors the image at NW
 
     def addImg(self, x, y):
         self.img = tk.PhotoImage(file='temp.png')
         self.imgs.append(self.img)
         self.can.create_image(x, y, anchor=tk.NW, image=self.img)
 
+# 
     def error(self, message):
         messagebox.showerror('Fatal error', message)
         del self
@@ -82,7 +92,7 @@ def main():
 
     g = Gui()
 
-    zoom, lat, lon = 16, 37.937290, 21.271713
+    zoom, lat, lon = 17, 37.937290, 21.271713
     od = [600, 600, lat, lon] # OLD DATA width, height, x, y
 
     while 1:
