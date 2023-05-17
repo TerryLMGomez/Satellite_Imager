@@ -9,7 +9,7 @@ from io import BytesIO             # Image to bytes conversion
 import math                        # Math library
 
 
-# base window for program and canvas with fill page and parameters
+# Base window for program and canvas with fill page and parameters
 
 class Gui:
     def __init__(self):                     
@@ -19,31 +19,37 @@ class Gui:
         self.can.pack(fill=tk.BOTH, expand=1)
         self.imgs = []
         
-# ignore
+# Ignore
 
     def __repr__(self):
         return f'__SatelliteImager.Graphics'
     
-# adds image "temp.pmg", appends to array and anchors the image at NW
+# Adds image "temp.pmg", appends to array and anchors the image at NW
 
     def addImg(self, x, y):
         self.img = tk.PhotoImage(file='temp.png')
         self.imgs.append(self.img)
         self.can.create_image(x, y, anchor=tk.NW, image=self.img)
 
-# 
+# Pending from viclobato
+
     def error(self, message):
         messagebox.showerror('Fatal error', message)
         del self
+        
+# Allows for the window to be closed properly
 
     def clr(self):
         for w in self.root.winfo_children():
             w.destroy() 
 
+# Updates the GUI and any pending GUI updates
+
     def upd(self):
         self.root.update()
 
 # This converts a latitude and longitude Into a tile number
+
 def convert(lat, lon, z, extent = 1):
     z2 = 1 << z
     lon = ((lon + 180.0) % 360.0)
@@ -54,8 +60,11 @@ def convert(lat, lon, z, extent = 1):
     return [zl_x, zl_y]
 
 # Get image from x/y tile
+
 def getImg(xt, yt, z, rf):
+    
     # My API key - you can easily generate your own free one
+    
     token = 'pk.eyJ1IjoicGJhcm4xMCIsImEiOiJja29neWRpa3kwdHNyMzBsYTMyZzY3Mjh2In0.4qncuUkuvlkh_AwRpz5pog'
     r = get(
         f'https://api.mapbox.com/v4/mapbox.satellite/{z}/{xt}/{yt}@2x.pngraw?access_token={token}',
