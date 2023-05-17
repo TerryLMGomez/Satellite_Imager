@@ -31,7 +31,7 @@ class Gui:
         self.imgs.append(self.img)
         self.can.create_image(x, y, anchor=tk.NW, image=self.img)
 
-# Pending from viclobato
+# Pending from viclobato 
 
     def error(self, message):
         messagebox.showerror('Fatal error', message)
@@ -73,8 +73,11 @@ def getImg(xt, yt, z, rf):
     img.save('temp.png')
 
 # Globalizes variables to allow them to be accessed and modified within the function.
-# Checks for update by comparing width,height,latitude and longitude with the main window
-#
+# Checks for update to exit by comparing width,height,latitude and longitude with the main window
+# Calculates the tile coords 'xta', 'yta'
+# Calls the getImg() function with coords as arguements. This will add the retrieved image to the GUI canvas at specified positions
+# Calls g.upd() to update the GUI and process and process pending events.
+# xt and xy variables are multiplied by 2 to update coords for next iteration of loops
 
 def update():
     global zoom, lat, lon, g, od
@@ -85,7 +88,6 @@ def update():
         
         for x in range(math.ceil(g.root.winfo_width()/(512//(2**zc)))):
             for y in range(math.ceil(g.root.winfo_height()/(512//(2**zc)))):
-                # Check for update to exit
                 cd = [g.root.winfo_width(), g.root.winfo_height(), lat, lon]
                 if od != cd:
                     od = cd
@@ -98,6 +100,11 @@ def update():
                 g.upd()
         xt *= 2
         yt *= 2
+
+# Globalizes variables to allow them to be accessed and modified within the function.
+# initializes Gui window
+# Allows user to input their zoom level and custom coords
+# While loop basically compares od variable with cd variable and updats gui accordingly
 
 def main():
     global zoom, lat, lon, g, od
@@ -114,7 +121,9 @@ def main():
             update()
         else:
             g.upd()
-    
+
+# This is standard code for handling and displaying errors in the GUI applicatiom without causing the program to terminate abruptly. 
+
 if __name__ == '__main__':
     try:
         main()
