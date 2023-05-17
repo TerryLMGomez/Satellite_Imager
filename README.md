@@ -1,4 +1,4 @@
-# Open_source_maps
+# Satellite_Imager
 
 - Map that utilizes the Mapbox API to create a Tkinter app that acts as a satellite imager
 
