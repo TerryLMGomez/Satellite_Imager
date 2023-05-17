@@ -31,7 +31,7 @@ class Gui:
         self.imgs.append(self.img)
         self.can.create_image(x, y, anchor=tk.NW, image=self.img)
 
-# Pending from viclobato 
+# Instead of raising normal python error, gives an error box 
 
     def error(self, message):
         messagebox.showerror('Fatal error', message)
